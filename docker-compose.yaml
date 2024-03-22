@@ -27,6 +27,17 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: secret
 
+  elt_script:
+    build:
+      context: ./elt_script
+      dockerfile: Dockerfile
+    command: [ "python", "elt_script.py" ]
+    networks:
+      - elt_network
+    depends_on:
+      - source_postgres
+      - destination_postgres
+
 networks:
   elt_network:
     driver: bridge
